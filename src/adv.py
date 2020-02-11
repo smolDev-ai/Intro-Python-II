@@ -1,5 +1,6 @@
 from room import Room
-
+from player import Player
+from colorama import Fore, Style
 # Declare all the rooms
 
 room = {
@@ -38,6 +39,32 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+p1 = Player("", room['outside'])
+
+
+def name(confirm="n"):
+    valid = {
+        "yes": True,
+        "y": True,
+        "ye": True,
+        "no": False,
+        "n": False
+    }
+
+    while valid[confirm] is False:
+        if confirm not in valid:
+            print(f"{Fore.RED}Incorrect input: {confirm}, please try again.{Style.RESET_ALL}")   
+
+        p1_name = input("What is your name? ")
+        if p1_name != '':
+            confirm = input(f"Your name is {Fore.GREEN}{p1_name}{Style.RESET_ALL}, is that correct? ")
+
+    print(f"Welcome to the game, {Fore.GREEN}{p1_name}{Style.RESET_ALL}")
+    return p1_name
+
+
+p1.name = name()
+
 
 # Write a loop that:
 #
@@ -49,3 +76,56 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def game(move=None):
+    correct = [
+        "N",
+        "S",
+        "E",
+        "W",
+        "n",
+        "s",
+        "e",
+        "w",
+        "q"
+    ]
+    print(p1)
+
+    while move is None or move.lower() != "q":
+        move = input("Where do you want to go? \n [N] [S] [E] [W] \n To quit the game hit [Q] ")
+
+        if move not in correct:
+            print(f"{Fore.RED}Please enter either: [N] [S] [E] [W], or [Q] to quit{Style.RESET_ALL}")
+        
+        if p1.room is None:
+            print(f"You can't go that way, returning you from whence you came...")
+            p1.room = room['outside']
+            print(p1)
+
+        if move in correct and move == "n" or move == "N":
+            new_room = p1.room.n_to
+            p1.room = new_room
+            print(p1)
+        if move in correct and move == "s" or move == "S":
+            new_room = p1.room.s_to
+            p1.room = new_room
+            print(p1)
+        if move in correct and move == "e" or move == "E":
+            new_room = p1.room.e_to
+            p1.room = new_room
+            print(p1)
+        if move in correct and move == "w" or move == "W":
+            new_room = p1.room.w_to
+            p1.room = new_room
+            print(p1)
+    
+    return f"Goodbye, {Fore.GREEN}{p1.name}{Style.RESET_ALL}!"
+            
+
+
+
+
+
+
+
+print(game())
