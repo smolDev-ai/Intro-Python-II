@@ -79,10 +79,6 @@ p1.name = name()
 
 def game(move=None):
     correct = [
-        "N",
-        "S",
-        "E",
-        "W",
         "n",
         "s",
         "e",
@@ -97,16 +93,16 @@ def game(move=None):
         if move not in correct:
             print(f"{Fore.RED}Please enter either: [N] [S] [E] [W], or [Q] to quit{Style.RESET_ALL}")
 
-        if move in correct and move == "n" or move == "N":
+        if move.lower() in correct and move == "n":
             if p1.room.n_to == None:
-                print(f"{Fore.RED} You can't go that way...")
+                print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
                 print(p1)
             else:
                 new_room = p1.room.n_to
                 p1.room = new_room
                 print(p1)
 
-        if move in correct and move == "s" or move == "S":
+        if move.lower() in correct and move == "s":
             if p1.room.s_to == None:
                 print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
                 print(p1)
@@ -115,18 +111,18 @@ def game(move=None):
                 p1.room = new_room
                 print(p1)
             
-        if move in correct and move == "e" or move == "E":
+        if move.lower() in correct and move == "e":
             if p1.room.e_to == None:
-                print(f"{Fore.RED} You can't go that way...")
+                print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
                 print(p1)
             else:
                 new_room = p1.room.e_to
                 p1.room = new_room
                 print(p1)
         
-        if move in correct and move == "w" or move == "W":
+        if move.lower() in correct and move == "w":
             if p1.room.w_to == None:
-                print(f"{Fore.RED} You can't go that way...")
+                print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
                 print(p1)
             else:
                 new_room = p1.room.w_to
