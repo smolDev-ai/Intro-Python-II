@@ -96,28 +96,46 @@ def game(move=None):
 
         if move not in correct:
             print(f"{Fore.RED}Please enter either: [N] [S] [E] [W], or [Q] to quit{Style.RESET_ALL}")
-        
-        if p1.room is None:
-            print(f"You can't go that way, returning you from whence you came...")
-            p1.room = room['outside']
-            print(p1)
 
         if move in correct and move == "n" or move == "N":
-            new_room = p1.room.n_to
-            p1.room = new_room
-            print(p1)
+            if p1.room.n_to == None:
+                print(f"{Fore.RED} You can't go that way...")
+                p1.room = room['outside']
+                print(p1)
+            else:
+                new_room = p1.room.n_to
+                p1.room = new_room
+                print(p1)
+
         if move in correct and move == "s" or move == "S":
-            new_room = p1.room.s_to
-            p1.room = new_room
-            print(p1)
+            if p1.room.s_to == None:
+                print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
+                p1.room = room['outside']
+                print(p1)
+            else:
+                new_room = p1.room.s_to
+                p1.room = new_room
+                print(p1)
+            
         if move in correct and move == "e" or move == "E":
-            new_room = p1.room.e_to
-            p1.room = new_room
-            print(p1)
+            if p1.room.e_to == None:
+                print(f"{Fore.RED} You can't go that way...")
+                p1.room = room['outside']
+                print(p1)
+            else:
+                new_room = p1.room.e_to
+                p1.room = new_room
+                print(p1)
+        
         if move in correct and move == "w" or move == "W":
-            new_room = p1.room.w_to
-            p1.room = new_room
-            print(p1)
+            if p1.room.w_to == None:
+                print(f"{Fore.RED} You can't go that way...")
+                p1.room = room['outside']
+                print(p1)
+            else:
+                new_room = p1.room.w_to
+                p1.room = new_room
+                print(p1)
     
     return f"Goodbye, {Fore.GREEN}{p1.name}{Style.RESET_ALL}!"
             
