@@ -1,11 +1,15 @@
 from room import Room
 from player import Player
 from colorama import Fore, Style
+from item import Item
 # Declare all the rooms
+
+item1 = Item("Sword", "This is a sword.")
+item2 = Item("Wand", "This is a wand.")
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", [item1, item2]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -23,16 +27,17 @@ earlier adventurers. The only exit is to the south."""),
 }
 
 
+
 # Link rooms together
 
-room['outside'].n_to = room['foyer']
-room['foyer'].s_to = room['outside']
-room['foyer'].n_to = room['overlook']
-room['foyer'].e_to = room['narrow']
-room['overlook'].s_to = room['foyer']
-room['narrow'].w_to = room['foyer']
-room['narrow'].n_to = room['treasure']
-room['treasure'].s_to = room['narrow']
+room['outside'].n = room['foyer']
+room['foyer'].s = room['outside']
+room['foyer'].n = room['overlook']
+room['foyer'].e = room['narrow']
+room['overlook'].s = room['foyer']
+room['narrow'].w = room['foyer']
+room['narrow'].n = room['treasure']
+room['treasure'].s = room['narrow']
 
 #
 # Main
@@ -78,72 +83,49 @@ p1.name = name()
 # If the user enters "q", quit the game.
 
 def game(command=None):
-    correct = [
+    moves = [
         "n",
         "s",
         "e",
         "w",
+    ]
+
+    other_commands = [
         "h",
         "where",
-        "whereami"
+        "whereami",
         "q"
     ]
     print(p1)
 
-    while command is None or command.lower() != "q":
-        command = input("Where do you want to go? ").strip()
+    while command is None or command != "q":
+        command = input("Where do you want to go? ").strip().lower()
 
-        if command not in correct:
+        if command not in moves and command not in other_commands:
             print(f"{Fore.RED}Incorrect Input, press [H] for help!{Style.RESET_ALL}")
 
-        if command.lower() in correct and command == "n":
-            if p1.room.n_to == None:
-                print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
-                print(p1)
-            else:
-                new_room = p1.room.n_to
-                p1.room = new_room
-                print(p1)
+        room = getattr(p1.room, command, None)
 
-        if command.lower() in correct and command == "s":
-            if p1.room.s_to == None:
-                print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
-                print(p1)
-            else:
-                new_room = p1.room.s_to
-                p1.room = new_room
-                print(p1)
-            
-        if command.lower() in correct and command == "e":
-            if p1.room.e_to == None:
-                print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
-                print(p1)
-            else:
-                new_room = p1.room.e_to
-                p1.room = new_room
-                print(p1)
-        
-        if command.lower() in correct and command == "w":
-            if p1.room.w_to == None:
-                print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
-                print(p1)
-            else:
-                new_room = p1.room.w_to
-                p1.room = new_room
-                print(p1)
-        
-        if command.lower() in correct and command == "where" or command == "whereami":
+        if command in moves and room != None:
+            p1.room = room
             print(p1)
 
-        if command.lower() in correct and command == "h":
-            print(f"\n{Fore.BLUE}[N]{Style.RESET_ALL} -> Moves the character North.\n"
-                  f"{Fore.BLUE}[S]{Style.RESET_ALL} -> Moves the character South.\n"
-                  f"{Fore.BLUE}[E]{Style.RESET_ALL} -> Moves the character East.\n"
-                  f"{Fore.BLUE}[W]{Style.RESET_ALL} -> Moves the character West.\n"
-                  f"{Fore.MAGENTA}[take \"item\"]{Style.RESET_ALL} -> picks up the specified item.\n"
-                  f"{Fore.MAGENTA}[drop \"item\"]{Style.RESET_ALL} -> drops the specified item.\n"
-                  f"{Fore.MAGENTA}[where/whereami]{Style.RESET_ALL} -> Gives character's current location.\n"
-                  f"{Fore.RED}[Q]{Style.RESET_ALL} -> quits the game.\n\n")
+        elif command in other_commands:
+            if command == "where" or command == "whereami":
+                print(p1)
+
+            if command == "h":
+                print(f"\n{Fore.BLUE}[N]{Style.RESET_ALL} -> Moves the character North.\n"
+                      f"{Fore.BLUE}[S]{Style.RESET_ALL} -> Moves the character South.\n"
+                      f"{Fore.BLUE}[E]{Style.RESET_ALL} -> Moves the character East.\n"
+                      f"{Fore.BLUE}[W]{Style.RESET_ALL} -> Moves the character West.\n"
+                      f"{Fore.MAGENTA}[take \"item\"]{Style.RESET_ALL} -> picks up the specified item.\n"
+                      f"{Fore.MAGENTA}[drop \"item\"]{Style.RESET_ALL} -> drops the specified item.\n"
+                      f"{Fore.MAGENTA}[where/whereami]{Style.RESET_ALL} -> Gives character's current location.\n"
+                      f"{Fore.RED}[Q]{Style.RESET_ALL} -> quits the game.\n\n")
+        else:
+            print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
+            print(p1)
     
     return f"Goodbye, {Fore.GREEN}{p1.name}{Style.RESET_ALL}!"
             
