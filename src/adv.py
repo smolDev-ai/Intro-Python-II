@@ -77,23 +77,26 @@ p1.name = name()
 #
 # If the user enters "q", quit the game.
 
-def game(move=None):
+def game(command=None):
     correct = [
         "n",
         "s",
         "e",
         "w",
+        "h",
+        "where",
+        "whereami"
         "q"
     ]
     print(p1)
 
-    while move is None or move.lower() != "q":
-        move = input("Where do you want to go? \n [N] [S] [E] [W] \n To quit the game hit [Q] ")
+    while command is None or command.lower() != "q":
+        command = input("Where do you want to go? ").strip()
 
-        if move not in correct:
-            print(f"{Fore.RED}Please enter either: [N] [S] [E] [W], or [Q] to quit{Style.RESET_ALL}")
+        if command not in correct:
+            print(f"{Fore.RED}Incorrect Input, press [H] for help!{Style.RESET_ALL}")
 
-        if move.lower() in correct and move == "n":
+        if command.lower() in correct and command == "n":
             if p1.room.n_to == None:
                 print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
                 print(p1)
@@ -102,7 +105,7 @@ def game(move=None):
                 p1.room = new_room
                 print(p1)
 
-        if move.lower() in correct and move == "s":
+        if command.lower() in correct and command == "s":
             if p1.room.s_to == None:
                 print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
                 print(p1)
@@ -111,7 +114,7 @@ def game(move=None):
                 p1.room = new_room
                 print(p1)
             
-        if move.lower() in correct and move == "e":
+        if command.lower() in correct and command == "e":
             if p1.room.e_to == None:
                 print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
                 print(p1)
@@ -120,7 +123,7 @@ def game(move=None):
                 p1.room = new_room
                 print(p1)
         
-        if move.lower() in correct and move == "w":
+        if command.lower() in correct and command == "w":
             if p1.room.w_to == None:
                 print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
                 print(p1)
@@ -128,14 +131,34 @@ def game(move=None):
                 new_room = p1.room.w_to
                 p1.room = new_room
                 print(p1)
+        
+        if command.lower() in correct and command == "where" or command == "whereami":
+            print(p1)
+
+        if command.lower() in correct and command == "h":
+            print(f"\n{Fore.BLUE}[N]{Style.RESET_ALL} -> Moves the character North.\n"
+                  f"{Fore.BLUE}[S]{Style.RESET_ALL} -> Moves the character South.\n"
+                  f"{Fore.BLUE}[E]{Style.RESET_ALL} -> Moves the character East.\n"
+                  f"{Fore.BLUE}[W]{Style.RESET_ALL} -> Moves the character West.\n"
+                  f"{Fore.MAGENTA}[take \"item\"]{Style.RESET_ALL} -> picks up the specified item.\n"
+                  f"{Fore.MAGENTA}[drop \"item\"]{Style.RESET_ALL} -> drops the specified item.\n"
+                  f"{Fore.MAGENTA}[where/whereami]{Style.RESET_ALL} -> Gives character's current location.\n"
+                  f"{Fore.RED}[Q]{Style.RESET_ALL} -> quits the game.\n\n")
     
     return f"Goodbye, {Fore.GREEN}{p1.name}{Style.RESET_ALL}!"
             
 
-
-
-
-
-
+# Notes To Myself:
+# When you create your items tomorrow, make an items class and aggregate it
+# onto the player and room classes
+# rooms can have any number of items
+# Limit the number of items a player can hold to two (items[:3] to start)
+# when a player picks up and item, remove it from the items within the room,
+# and add it to the player list.
+# implement a call that lets the player know that they have reached their
+# given limit of items
+# if the player tries to pick up another item after their list has been filled,
+# have them drop one.
+# Do not allow them to move on, until they do.
 
 print(game())

@@ -6,7 +6,8 @@ wrapper = textwrap.TextWrapper(width=50)
 
 
 class Room:
-    def __init__(self, name, description, n_to=None, s_to=None, e_to=None, w_to=None):
+    def __init__(self, name, description, n_to=None, s_to=None, e_to=None, 
+                 w_to=None):
         self.name = name
         self.description = description
         self.n_to = n_to
@@ -15,9 +16,9 @@ class Room:
         self.w_to = w_to
 
     def desc(self):
-        desc = wrapper.wrap(self.description)
-        for sentence in desc:
-            return sentence
+        wrapper = textwrap.TextWrapper(width=70)
+        desc = wrapper.fill(text=self.description)
+        return f"{desc}"
 
     def __str__(self):
-        return f"{self.name}: {self.description}"
+        return f"{self.name}:\n{Room.desc(self)}"
