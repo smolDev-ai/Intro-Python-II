@@ -100,7 +100,6 @@ def game(move=None):
         if move in correct and move == "n" or move == "N":
             if p1.room.n_to == None:
                 print(f"{Fore.RED} You can't go that way...")
-                p1.room = room['outside']
                 print(p1)
             else:
                 new_room = p1.room.n_to
@@ -110,7 +109,6 @@ def game(move=None):
         if move in correct and move == "s" or move == "S":
             if p1.room.s_to == None:
                 print(f"{Fore.RED} You can't go that way...{Style.RESET_ALL}")
-                p1.room = room['outside']
                 print(p1)
             else:
                 new_room = p1.room.s_to
@@ -120,7 +118,6 @@ def game(move=None):
         if move in correct and move == "e" or move == "E":
             if p1.room.e_to == None:
                 print(f"{Fore.RED} You can't go that way...")
-                p1.room = room['outside']
                 print(p1)
             else:
                 new_room = p1.room.e_to
@@ -130,7 +127,6 @@ def game(move=None):
         if move in correct and move == "w" or move == "W":
             if p1.room.w_to == None:
                 print(f"{Fore.RED} You can't go that way...")
-                p1.room = room['outside']
                 print(p1)
             else:
                 new_room = p1.room.w_to
