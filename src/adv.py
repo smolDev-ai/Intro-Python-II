@@ -9,7 +9,7 @@ item2 = Item("Wand", "This is a wand.")
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons",[item1, item2]),
+                     "North of you, the cave mount beckons", [item1, item2]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -30,14 +30,14 @@ earlier adventurers. The only exit is to the south."""),
 
 # Link rooms together
 
-room['outside'].n = room['foyer']
-room['foyer'].s = room['outside']
-room['foyer'].n = room['overlook']
-room['foyer'].e = room['narrow']
-room['overlook'].s = room['foyer']
-room['narrow'].w = room['foyer']
-room['narrow'].n = room['treasure']
-room['treasure'].s = room['narrow']
+room['outside'].n_to = room['foyer']
+room['foyer'].s_to = room['outside']
+room['foyer'].n_to = room['overlook']
+room['foyer'].e_to = room['narrow']
+room['overlook'].s_to = room['foyer']
+room['narrow'].w_to = room['foyer']
+room['narrow'].n_to = room['treasure']
+room['treasure'].s_to = room['narrow']
 
 #
 # Main
@@ -109,9 +109,10 @@ def game(command=None):
         if command[0] not in moves and command[0] not in other_commands:
             print(f"{Fore.RED}Incorrect Input, press [H] for help!{Style.RESET_ALL}")
 
-        room = getattr(p1.room, command[0], None)
+        movement = f"{command[0]}_to"
+        room = getattr(p1.room, movement, None)
 
-        if command in moves and room != None:
+        if command[0] in moves and room is not None:
             p1.room = room
             print(p1)
 
