@@ -131,6 +131,14 @@ def game(command=None):
                     else:
                         print("can't pick anything up")
 
+            if main_command in other_commands and main_command == "drop":
+                item = command[1]
+                for i in p1.inventory:
+                    if item == i.name.lower():
+                        p1.remove_item(i.name)
+                        p1.room.add_item(i)
+                        break
+
             if main_command in other_commands and main_command == "i" or main_command == "bag":
                 p1.get_inventory()
 

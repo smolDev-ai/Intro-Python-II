@@ -17,6 +17,15 @@ class Player:
         for items in self.inventory:
             print(f"{Fore.BLUE}{items.name}{Style.RESET_ALL}")
 
+    def remove_item(self, dropped):
+        if len(self.inventory) == 0:
+            print(f"{Fore.RED}You don't have any items!{Style.RESET_ALL}")
+        else:
+            for i in self.inventory:
+                if dropped == i.name:
+                    self.inventory.remove(i)
+                    print(f"{Fore.GREEN}{self.name}{Style.RESET_ALL} dropped {Fore.BLUE}{dropped}{Style.RESET_ALL}")
+
     def get_inventory(self):
         if len(self.inventory) > 0:
             print(f"{Style.BRIGHT}Your inventory contains: {Style.RESET_ALL}")

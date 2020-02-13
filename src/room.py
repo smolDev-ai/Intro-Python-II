@@ -40,3 +40,7 @@ class Room:
         for i in self.items:
             if item == i.name:
                 self.items.remove(i)
+
+    def add_item(self, item):
+        self.items.append(item)
+        
