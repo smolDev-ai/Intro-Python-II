@@ -18,16 +18,25 @@ class Room:
         self.w = w
         self.items = items
 
+    def __str__(self):
+        desc_string = ""
+        desc_string += f"{self.name}: \n{self.desc()}"
+        return desc_string
+
     def desc(self):
         wrapper = textwrap.TextWrapper(width=70)
         desc = wrapper.fill(text=self.description)
         return f"{desc}"
 
+    def show_items(self):
+        if len(self.items):
+            print(f"{Style.BRIGHT}Items in the room:{Style.RESET_ALL}")
+            for i in self.items:
+                print(f"{Fore.GREEN}{Style.BRIGHT}{i.name}: {i.description}{Style.RESET_ALL}")
+        else:
+            return None
+
     def remove_item(self, item):
         for i in self.items:
-            if Item.name == i.name:
+            if item == i.name:
                 self.items.remove(i)
-                print(f"\n\n{Style.BRIGHT}Items in the area:{Style.RESET_ALL} \n{Fore.GREEN}{i.name}: {i.description}{Style.RESET_ALL}")
-
-    def __str__(self):
-        return f"{self.name}: \n{Room.desc(self)}"
