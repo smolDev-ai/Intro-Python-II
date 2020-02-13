@@ -9,7 +9,7 @@ item2 = Item("Wand", "This is a wand.")
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", [item1, item2]),
+                     "North of you, the cave mount beckons", [item1, item]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -94,33 +94,39 @@ def game(command=None):
         "h",
         "where",
         "whereami",
-        "q"
+        "q",
+        "take"
     ]
     print(p1)
 
-    while command is None or command != "q":
+    while command is None or command[0] != "q":
         room_items = p1.room.items
         if len(room_items) > 0:
             print(f"{Style.BRIGHT}items in the area:{Style.RESET_ALL}")
             for i in room_items:
                 print(f"{Fore.GREEN}{i}{Style.RESET_ALL}")
         
-        command = input("Where do you want to go? ").strip().lower()
+        command = input("Where do you want to go? ").strip().lower().split(' ')
 
-        if command not in moves and command not in other_commands:
+        if command[0] not in moves and command[0] not in other_commands:
             print(f"{Fore.RED}Incorrect Input, press [H] for help!{Style.RESET_ALL}")
 
-        room = getattr(p1.room, command, None)
+        room = getattr(p1.room, command[0], None)
 
         if command in moves and room != None:
             p1.room = room
             print(p1)
 
-        elif command in other_commands:
+        elif command[0] in other_commands:
             if command == "where" or command == "whereami":
                 print(p1)
 
-            if command == "h":
+            if command[0] in other_commands and command[0] == "take":
+                item = command[1]
+                p1.room.remove_item(item)
+                p1.add_item(item)
+
+            if command[0] == "h":
                 print(f"\n{Fore.BLUE}[N]{Style.RESET_ALL} -> Moves the character North.\n"
                       f"{Fore.BLUE}[S]{Style.RESET_ALL} -> Moves the character South.\n"
                       f"{Fore.BLUE}[E]{Style.RESET_ALL} -> Moves the character East.\n"
