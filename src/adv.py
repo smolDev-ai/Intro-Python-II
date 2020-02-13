@@ -99,6 +99,12 @@ def game(command=None):
     print(p1)
 
     while command is None or command != "q":
+        room_items = p1.room.items
+        if len(room_items) > 0:
+            print(f"{Style.BRIGHT}items in the area:{Style.RESET_ALL}")
+            for i in room_items:
+                print(f"{Fore.GREEN}{i}{Style.RESET_ALL}")
+        
         command = input("Where do you want to go? ").strip().lower()
 
         if command not in moves and command not in other_commands:
