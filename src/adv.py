@@ -9,7 +9,7 @@ item2 = Item("Wand", "This is a wand.")
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", [item1, item]),
+                     "North of you, the cave mount beckons",[item1, item2]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -95,17 +95,15 @@ def game(command=None):
         "where",
         "whereami",
         "q",
-        "take"
+        "i",
+        "bag",
+        "take",
+        "drop"
     ]
     print(p1)
 
     while command is None or command[0] != "q":
-        room_items = p1.room.items
-        if len(room_items) > 0:
-            print(f"{Style.BRIGHT}items in the area:{Style.RESET_ALL}")
-            for i in room_items:
-                print(f"{Fore.GREEN}{i}{Style.RESET_ALL}")
-        
+        p1.room.show_items()
         command = input("Where do you want to go? ").strip().lower().split(' ')
 
         if command[0] not in moves and command[0] not in other_commands:
@@ -123,8 +121,13 @@ def game(command=None):
 
             if command[0] in other_commands and command[0] == "take":
                 item = command[1]
-                p1.room.remove_item(item)
-                p1.add_item(item)
+                for i in p1.room.items:
+                    if item == i.name.lower():
+                        p1.room.remove_item(i.name)
+                        p1.add_item(i)
+                        break
+                    else:
+                        print("can't pick anything up")
 
             if command[0] == "h":
                 print(f"\n{Fore.BLUE}[N]{Style.RESET_ALL} -> Moves the character North.\n"
