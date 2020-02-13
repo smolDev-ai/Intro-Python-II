@@ -17,5 +17,13 @@ class Player:
         for items in self.inventory:
             print(f"{Fore.BLUE}{items.name}{Style.RESET_ALL}")
 
+    def get_inventory(self):
+        if len(self.inventory) > 0:
+            print("Your inventory contains: ")
+            for i in self.inventory:
+                print(i)
+        else:
+            print("Your inventory is empty!")
+    
     def __str__(self):
         return f"{Fore.GREEN}{self.name}{Style.RESET_ALL} is in {Fore.YELLOW}{self.room}{Style.RESET_ALL}"

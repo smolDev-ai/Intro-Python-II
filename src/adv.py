@@ -105,22 +105,23 @@ def game(command=None):
     while command is None or command[0] != "q":
         p1.room.show_items()
         command = input("Where do you want to go? ").strip().lower().split(' ')
+        main_command = command[0]
 
-        if command[0] not in moves and command[0] not in other_commands:
+        if main_command not in moves and main_command not in other_commands:
             print(f"{Fore.RED}Incorrect Input, press [H] for help!{Style.RESET_ALL}")
 
-        movement = f"{command[0]}_to"
+        movement = f"{main_command}_to"
         room = getattr(p1.room, movement, None)
 
-        if command[0] in moves and room is not None:
+        if main_command in moves and room is not None:
             p1.room = room
             print(p1)
 
-        elif command[0] in other_commands:
-            if command == "where" or command == "whereami":
+        elif main_command in other_commands:
+            if main_command == "where" or main_command == "whereami":
                 print(p1)
 
-            if command[0] in other_commands and command[0] == "take":
+            if main_command in other_commands and main_command == "take":
                 item = command[1]
                 for i in p1.room.items:
                     if item == i.name.lower():
@@ -130,7 +131,10 @@ def game(command=None):
                     else:
                         print("can't pick anything up")
 
-            if command[0] == "h":
+            if main_command in other_commands and main_command == "i" or main_command == "bag":
+                p1.get_inventory()
+
+            if main_command == "h":
                 print(f"\n{Fore.BLUE}[N]{Style.RESET_ALL} -> Moves the character North.\n"
                       f"{Fore.BLUE}[S]{Style.RESET_ALL} -> Moves the character South.\n"
                       f"{Fore.BLUE}[E]{Style.RESET_ALL} -> Moves the character East.\n"
