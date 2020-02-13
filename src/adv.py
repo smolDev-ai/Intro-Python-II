@@ -6,10 +6,11 @@ from item import Item
 
 item1 = Item("Sword", "This is a sword.")
 item2 = Item("Wand", "This is a wand.")
+item3 = Item("Spear", "This is a spear.")
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", [item1, item2]),
+                     "North of you, the cave mount beckons", [item1, item2, item3]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -92,6 +93,7 @@ def game(command=None):
 
     other_commands = [
         "h",
+        "help",
         "where",
         "whereami",
         "q",
@@ -105,7 +107,7 @@ def game(command=None):
     p1.room.show_items()
 
     while command is None or command[0] != "q":
-        command = input("\nWhere do you want to go? ").strip().lower().split(' ')
+        command = input("\nWhat do you want to do? ").strip().lower().split(' ')
         main_command = command[0]
 
         if main_command not in moves and main_command not in other_commands:
@@ -131,9 +133,6 @@ def game(command=None):
                         p1.room.remove_item(i.name)
                         p1.add_item(i)
                         break
-                    else:
-                        print("can't pick anything up")
-                    
                 p1.room.show_items()
 
             if main_command in other_commands and main_command == "drop":
@@ -149,7 +148,7 @@ def game(command=None):
             if main_command in other_commands and main_command == "i" or main_command == "bag":
                 p1.get_inventory()
 
-            if main_command == "h":
+            if main_command in other_commands and main_command == "h" or main_command == "help":
                 print(f"\n{Fore.BLUE}[N]{Style.RESET_ALL} -> Moves the character North.\n"
                       f"{Fore.BLUE}[S]{Style.RESET_ALL} -> Moves the character South.\n"
                       f"{Fore.BLUE}[E]{Style.RESET_ALL} -> Moves the character East.\n"
@@ -164,19 +163,6 @@ def game(command=None):
             print(p1)
     
     return f"Goodbye, {Fore.GREEN}{p1.name}{Style.RESET_ALL}!"
-            
 
-# Notes To Myself:
-# When you create your items tomorrow, make an items class and aggregate it
-# onto the player and room classes
-# rooms can have any number of items
-# Limit the number of items a player can hold to two (items[:3] to start)
-# when a player picks up and item, remove it from the items within the room,
-# and add it to the player list.
-# implement a call that lets the player know that they have reached their
-# given limit of items
-# if the player tries to pick up another item after their list has been filled,
-# have them drop one.
-# Do not allow them to move on, until they do.
 
 print(game())
