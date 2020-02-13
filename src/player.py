@@ -21,7 +21,7 @@ class Player:
         if len(self.inventory) > 0:
             print(f"{Style.BRIGHT}Your inventory contains: {Style.RESET_ALL}")
             for i in self.inventory:
-                print(f"{Fore.BLUE}i{Style.RESET_ALL}")
+                print(f"{Fore.BLUE}{i}{Style.RESET_ALL}")
         else:
             print("Your inventory is empty!")
     

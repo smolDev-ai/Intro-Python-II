@@ -141,6 +141,7 @@ def game(command=None):
                       f"{Fore.BLUE}[W]{Style.RESET_ALL} -> Moves the character West.\n"
                       f"{Fore.MAGENTA}[take \"item\"]{Style.RESET_ALL} -> picks up the specified item.\n"
                       f"{Fore.MAGENTA}[drop \"item\"]{Style.RESET_ALL} -> drops the specified item.\n"
+                      f"{Fore.MAGENTA}[i/bag]{Style.RESET_ALL} -> Shows items in character's inventory.\n"
                       f"{Fore.MAGENTA}[where/whereami]{Style.RESET_ALL} -> Gives character's current location.\n"
                       f"{Fore.RED}[Q]{Style.RESET_ALL} -> quits the game.\n\n")
         else:
