@@ -4,13 +4,11 @@ from colorama import Fore, Style
 from item import Item
 # Declare all the rooms
 
-item1 = Item("Sword", "This is a sword.")
-item2 = Item("Wand", "This is a wand.")
-item3 = Item("Spear", "This is a spear.")
+
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", [item1, item2, item3]),
+                     "North of you, the cave mount beckons",),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -39,6 +37,33 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
+
+
+# add items to rooms:
+items = {
+    "Sword": Item("Sword", "This is a sword."),
+    "Wand": Item("Wand", "This is a wand."),
+    "Spear": Item("Spear", "This is a spear."),
+    "Rope": Item("Rope", "This is a long rope."),
+    "Harp": Item("Harp", "Once a beautiful instrument, now it's strings are broken."),
+    "Flute": Item("Flute", "A flute.")
+
+}
+
+# add items to rooms:
+room['outside'].items = [
+    items['Wand'],
+    items['Sword'],
+    items['Spear']
+]
+room['foyer'].items = [
+    items['Rope'],
+    items['Harp']
+]
+
+room['narrow'].items = [
+    items['Flute']
+]
 
 #
 # Main
@@ -126,29 +151,21 @@ def game(command=None):
                 print(p1)
                 p1.room.show_items()
 
-            if main_command in other_commands and main_command == "take" or main_command == "get":
+            if main_command == "take" or main_command == "get":
                 item = command[1]
-                for i in p1.room.items:
-                    if item == i.name.lower():
-                        p1.room.remove_item(i.name)
-                        p1.add_item(i)
-                        break
+                p1.add_item(items[item.title()])
                 p1.room.show_items()
 
-            if main_command in other_commands and main_command == "drop":
+            if main_command == "drop":
                 item = command[1]
-                for i in p1.inventory:
-                    if item == i.name.lower():
-                        p1.remove_item(i.name)
-                        p1.room.add_item(i)
-                        break
+                p1.remove_item(item)
                 
                 p1.room.show_items()
 
-            if main_command in other_commands and main_command == "i" or main_command == "bag":
+            if main_command == "i" or main_command == "bag":
                 p1.get_inventory()
 
-            if main_command in other_commands and main_command == "h" or main_command == "help":
+            if main_command == "h" or main_command == "help":
                 print(f"\n{Fore.BLUE}[N]{Style.RESET_ALL} -> Moves the character North.\n"
                       f"{Fore.BLUE}[S]{Style.RESET_ALL} -> Moves the character South.\n"
                       f"{Fore.BLUE}[E]{Style.RESET_ALL} -> Moves the character East.\n"

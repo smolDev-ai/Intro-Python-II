@@ -13,6 +13,7 @@ class Player:
     def add_item(self, new_item):
         if len(self.inventory) < 2:
             self.inventory.append(new_item)
+            self.room.remove_item(new_item)
             print(f"{Fore.GREEN}{self.name}{Style.RESET_ALL} added the {Fore.BLUE}{new_item.name}{Style.RESET_ALL} to their inventory\n")
             print(f"\n{Style.BRIGHT}Your inventory now contains: {Style.RESET_ALL}")
             for items in self.inventory:
@@ -27,10 +28,11 @@ class Player:
             for i in self.inventory:
                 if dropped == i.name.lower():
                     self.inventory.remove(i)
+                    self.room.add_item(i)
                     print(f"{Fore.GREEN}{self.name}{Style.RESET_ALL} dropped {Fore.BLUE}{dropped}{Style.RESET_ALL}\n")
 
     def get_inventory(self):
-        if len(self.inventory) > 0:
+        if len(self.inventory):
             print(f"{Style.BRIGHT}Your inventory contains: {Style.RESET_ALL}")
             for i in self.inventory:
                 print(f"{Fore.BLUE}{i}{Style.RESET_ALL}")

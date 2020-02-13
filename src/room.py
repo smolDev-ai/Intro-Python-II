@@ -30,16 +30,14 @@ class Room:
 
     def show_items(self):
         if len(self.items):
-            print(f"\n{Style.BRIGHT}Items in the room:{Style.RESET_ALL}")
+            print(f"{Style.BRIGHT}Items in the room:{Style.RESET_ALL}")
             for i in self.items:
                 print(f"{Fore.GREEN}{Style.BRIGHT}{i.name}: {i.description}{Style.RESET_ALL}")
         else:
             return None
 
     def remove_item(self, item):
-        for i in self.items:
-            if item == i.name:
-                self.items.remove(i)
+            self.items.remove(item)
 
     def add_item(self, item):
         self.items.append(item)
