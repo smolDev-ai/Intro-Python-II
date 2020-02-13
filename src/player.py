@@ -12,7 +12,7 @@ class Player:
 
     def add_item(self, new_item):
         self.inventory.append(new_item)
-        print(f"{Fore.GREEN}{self.name}{Style.RESET_ALL} added the {Fore.BLUE}{new_item.name}{Style.RESET_ALL} to their inventory")
+        print(f"{Fore.GREEN}{self.name}{Style.RESET_ALL} added the {Fore.BLUE}{new_item.name}{Style.RESET_ALL} to their inventory\n")
         print(f"Your inventory now contains: ")
         for items in self.inventory:
             print(f"{Fore.BLUE}{items.name}{Style.RESET_ALL}")
@@ -24,7 +24,7 @@ class Player:
             for i in self.inventory:
                 if dropped == i.name:
                     self.inventory.remove(i)
-                    print(f"{Fore.GREEN}{self.name}{Style.RESET_ALL} dropped {Fore.BLUE}{dropped}{Style.RESET_ALL}")
+                    print(f"{Fore.GREEN}{self.name}{Style.RESET_ALL} dropped {Fore.BLUE}{dropped}{Style.RESET_ALL}\n")
 
     def get_inventory(self):
         if len(self.inventory) > 0:
