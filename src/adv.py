@@ -104,7 +104,7 @@ def game(command=None):
 
     while command is None or command[0] != "q":
         p1.room.show_items()
-        command = input("Where do you want to go? ").strip().lower().split(' ')
+        command = input("\nWhere do you want to go? ").strip().lower().split(' ')
         main_command = command[0]
 
         if main_command not in moves and main_command not in other_commands:
