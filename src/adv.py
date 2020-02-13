@@ -98,6 +98,7 @@ def game(command=None):
         "i",
         "bag",
         "take",
+        "get",
         "drop"
     ]
     print(p1)
@@ -123,7 +124,7 @@ def game(command=None):
                 print(p1)
                 p1.room.show_items()
 
-            if main_command in other_commands and main_command == "take":
+            if main_command in other_commands and main_command == "take" or main_command == "get":
                 item = command[1]
                 for i in p1.room.items:
                     if item == i.name.lower():
@@ -153,7 +154,7 @@ def game(command=None):
                       f"{Fore.BLUE}[S]{Style.RESET_ALL} -> Moves the character South.\n"
                       f"{Fore.BLUE}[E]{Style.RESET_ALL} -> Moves the character East.\n"
                       f"{Fore.BLUE}[W]{Style.RESET_ALL} -> Moves the character West.\n"
-                      f"{Fore.MAGENTA}[take \"item\"]{Style.RESET_ALL} -> picks up the specified item.\n"
+                      f"{Fore.MAGENTA}[take/get \"item\"]{Style.RESET_ALL} -> picks up the specified item.\n"
                       f"{Fore.MAGENTA}[drop \"item\"]{Style.RESET_ALL} -> drops the specified item.\n"
                       f"{Fore.MAGENTA}[i/bag]{Style.RESET_ALL} -> Shows items in character's inventory.\n"
                       f"{Fore.MAGENTA}[where/whereami]{Style.RESET_ALL} -> Gives character's current location.\n"
