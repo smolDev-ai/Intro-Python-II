@@ -101,9 +101,9 @@ def game(command=None):
         "drop"
     ]
     print(p1)
+    p1.room.show_items()
 
     while command is None or command[0] != "q":
-        p1.room.show_items()
         command = input("\nWhere do you want to go? ").strip().lower().split(' ')
         main_command = command[0]
 
@@ -116,10 +116,12 @@ def game(command=None):
         if main_command in moves and room is not None:
             p1.room = room
             print(p1)
+            p1.room.show_items()
 
         elif main_command in other_commands:
             if main_command == "where" or main_command == "whereami":
                 print(p1)
+                p1.room.show_items()
 
             if main_command in other_commands and main_command == "take":
                 item = command[1]
@@ -130,6 +132,8 @@ def game(command=None):
                         break
                     else:
                         print("can't pick anything up")
+                    
+                p1.room.show_items()
 
             if main_command in other_commands and main_command == "drop":
                 item = command[1]
@@ -138,6 +142,8 @@ def game(command=None):
                         p1.remove_item(i.name)
                         p1.room.add_item(i)
                         break
+                
+                p1.room.show_items()
 
             if main_command in other_commands and main_command == "i" or main_command == "bag":
                 p1.get_inventory()
